@@ -20,7 +20,7 @@ class CarCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SvgPicture.asset('assets/car.svg', height: 200),
+          Image.network(car.imageUrl, height: 200),
           Text(
             car.model,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),

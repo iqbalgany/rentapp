@@ -4,6 +4,7 @@ import 'package:rentapp/presentations/cubits/auth/auth_cubit.dart';
 import 'package:rentapp/presentations/pages/auth_page.dart';
 import 'package:rentapp/presentations/pages/car_detail_page.dart';
 import 'package:rentapp/presentations/pages/car_list_page.dart';
+import 'package:rentapp/presentations/pages/maps_detail_page.dart';
 import 'package:rentapp/presentations/pages/onboarding_page.dart';
 import 'package:rentapp/routing/go_router_refresh_stream.dart';
 
@@ -14,11 +15,13 @@ class AppRoutes {
   static final authName = 'auth';
   static final carListName = 'carList';
   static final carDetailName = 'carDetail';
+  static final mapsDetailName = 'mapsDetail';
 
   static final onboardingPath = '/';
   static final authPath = '/auth';
   static final carListPath = '/car-list';
   static final carDetailPath = '/car-detail/:id';
+  static final mapsDetailPath = '/maps-detail/:id';
 
   static final router = GoRouter(
     refreshListenable: GoRouterRefreshStream(authCubit.stream),
@@ -70,6 +73,14 @@ class AppRoutes {
         builder: (context, state) {
           final String carId = state.pathParameters['id']!;
           return CarDetailPage(carId: carId);
+        },
+      ),
+      GoRoute(
+        path: mapsDetailPath,
+        name: mapsDetailName,
+        builder: (context, state) {
+          final String carId = state.pathParameters['id']!;
+          return MapsDetailPage(carId: carId);
         },
       ),
     ],

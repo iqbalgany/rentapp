@@ -4,12 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class CarModel {
   final String id;
   final String model;
+  final String imageUrl;
   final double distance;
   final double fuelCapacity;
   final double pricePerHour;
   CarModel({
     required this.id,
     required this.model,
+    required this.imageUrl,
     required this.distance,
     required this.fuelCapacity,
     required this.pricePerHour,
@@ -18,6 +20,7 @@ class CarModel {
   CarModel copyWith({
     String? id,
     String? model,
+    String? imageUrl,
     double? distance,
     double? fuelCapacity,
     double? pricePerHour,
@@ -25,6 +28,7 @@ class CarModel {
     return CarModel(
       id: id ?? this.id,
       model: model ?? this.model,
+      imageUrl: imageUrl ?? this.imageUrl,
       distance: distance ?? this.distance,
       fuelCapacity: fuelCapacity ?? this.fuelCapacity,
       pricePerHour: pricePerHour ?? this.pricePerHour,
@@ -35,6 +39,7 @@ class CarModel {
     return <String, dynamic>{
       'id': id,
       'model': model,
+      'imageUrl': imageUrl,
       'distance': distance,
       'fuelCapacity': fuelCapacity,
       'pricePerHour': pricePerHour,
@@ -46,6 +51,7 @@ class CarModel {
     return CarModel(
       id: snapshot.id,
       model: (data['model'] ?? ''),
+      imageUrl: (data['imageUrl'] ?? ''),
       distance: (data['distance'] ?? 0).toDouble(),
       fuelCapacity: (data['fuelCapacity'] ?? 0).toDouble(),
       pricePerHour: (data['pricePerHour'] ?? 0).toDouble(),
