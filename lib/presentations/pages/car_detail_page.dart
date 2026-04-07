@@ -6,9 +6,40 @@ import 'package:rentapp/presentations/widgets/car_card.dart';
 import 'package:rentapp/presentations/widgets/more_card.dart';
 import 'package:rentapp/routing/app_router.dart';
 
-class CarDetailPage extends StatelessWidget {
+class CarDetailPage extends StatefulWidget {
   final String carId;
   const CarDetailPage({super.key, required this.carId});
+
+  @override
+  State<CarDetailPage> createState() => _CarDetailPageState();
+}
+
+class _CarDetailPageState extends State<CarDetailPage>
+    with SingleTickerProviderStateMixin {
+  AnimationController? _controller;
+  Animation<double>? _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(seconds: 3),
+      vsync: this,
+    );
+
+    _animation = Tween<double>(begin: 1.0, end: 1.5).animate(_controller!)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    _controller!.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller!.forward();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +57,10 @@ class CarDetailPage extends StatelessWidget {
       ),
       body: BlocBuilder<CarCubit, CarState>(
         builder: (context, carState) {
-          final car = carState.cars.firstWhere((car) => car.id == carId);
-          final otherCars = carState.cars.where((c) => c.id != carId).toList();
+          final car = carState.cars.firstWhere((car) => car.id == widget.carId);
+          final otherCars = carState.cars
+              .where((c) => c.id != widget.carId)
+              .toList();
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -88,11 +121,6 @@ class CarDetailPage extends StatelessWidget {
                             height: 170,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                image: AssetImage('assets/maps2.jpg'),
-                                fit: BoxFit.cover,
-                              ),
-
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black12,
@@ -100,6 +128,17 @@ class CarDetailPage extends StatelessWidget {
                                   spreadRadius: 5,
                                 ),
                               ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Transform.scale(
+                                scale: _animation!.value,
+                                alignment: Alignment.center,
+                                child: Image.asset(
+                                  'assets/maps2.jpg',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ),
                         ),

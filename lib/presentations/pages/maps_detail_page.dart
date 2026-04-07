@@ -40,12 +40,22 @@ class MapsDetailPage extends StatelessWidget {
                   ),
                 ],
               ),
+
               Positioned(
                 bottom: 0,
                 left: 0,
                 right: 0,
                 child: carDetailsCard(
                   carState.cars.firstWhere((car) => car.id == carId),
+                ),
+              ),
+
+              Positioned(
+                right: 10,
+                bottom: 200,
+                child: Image.network(
+                  height: 120,
+                  carState.cars.firstWhere((car) => car.id == carId).imageUrl,
                 ),
               ),
             ],
